@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: #44355b;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.main-container {
+    height: 43rem;
+    width: 28rem;
+    background-color: #5de6de;
+    background-image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%); 
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.number {
+    background-color: #b1ade2;
+    background-image: linear-gradient(315deg, #b1ade2 0%, #7ddff8 74%); 
+}
+.operator {
+
+}
+.operator, .number {
+    border: none;
+    height: 2rem;
+    width: 2rem;
+}
+
