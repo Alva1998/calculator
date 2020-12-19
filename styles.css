@@ -1,17 +1,16 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-
 html {
     background-color: #44355b;
 }
-
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 7%;
+    margin-top: 4%;
 }
 
 button:hover {
@@ -19,24 +18,42 @@ button:hover {
 }
 
 .main-container {
-    height: 43rem;
-    width: 28rem;
+    height: 50rem;
+    width: 30rem;
     background-color: #5de6de;
     background-image: linear-gradient(315deg, #5de6de 0%, #b58ecc 74%); 
     border: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+    display: grid;
+    grid-template-columns: repeat(4, 7rem);
+    grid-template-rows: repeat(5, 7rem);
+    grid-column-gap: 3px;
+    grid-row-gap: 3px;
+    align-content: flex-end;
 }
+
 .number {
     background-color: #b1ade2;
-    background-image: linear-gradient(315deg, #b1ade2 0%, #7ddff8 74%); 
+    background-image: inherit;
 }
-.operator {
 
+.operator {
+    background-color: #7CC6E5;
 }
+
 .operator, .number {
     border: none;
-    height: 2rem;
-    width: 2rem;
+    height: 7rem;
+    width: 7rem;
+    font-size: 36px;
+    background-color: #5de6de;
+    background-image: linear-gradient(315deg, #5de6de 0%, #60b9d4 74%);
+}
+
+#zero {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    height: 7rem;
+    width: 14.2rem;
 }
 
