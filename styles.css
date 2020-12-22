@@ -13,6 +13,14 @@ main {
     margin-top: 4%;
 }
 
+#text {
+    color: white;
+    font-size: 64px;
+    position: absolute;
+    top: 24%;
+    left: 55%;
+}
+
 button:hover {
     cursor: pointer;
 }
