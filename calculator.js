@@ -1,9 +1,15 @@
 const calculator = () => {
     //*global variables 
     const text = document.querySelector('#text');
-    let displayValue = '';
-    let displayValue2 = '';
+    const display = document.querySelectorAll('.display');
+    const c = document.querySelector('#c');
+    const negative = document.querySelector('#negative');
+    const equals = document.querySelector('#equals');
+    const calc = document.querySelectorAll('.calc');
+    let num1 = '';
+    let num2 = '';
     let operator = '';
+    let result = '';
 
     const add = (a,b) => {
         return a + b;
@@ -31,66 +37,99 @@ const calculator = () => {
 
     const operate = (a,op,b) => {
         switch (op) {
-            case '+': 
-                return add(a,b);
+            case '+':
+                operator = ''; 
+                return add(parseFloat(a), parseFloat(b));
                 break;
             case '-':
-                return subtract(a,b);
+                operator = '';
+                return subtract(parseFloat(a), parseFloat(b));
                 break;
             case '*':
-                return multiply(a,b);
+                operator = '';
+                return multiply(parseFloat(a), parseFloat(b));
                 break;
             case '/':
-                return divide(a,b);
+                operator = '';
+                return divide(parseFloat(a), parseFloat(b));
                 break;
+            case '%':
+                operator = '';
+                return modulus(parseFloat(a), parseFloat(b));
             default:
-                return 'SECOND PARAMETER MUST BE + - * /';
+                return alert('SECOND PARAMETER MUST BE + - * /');
                 break;
         }
     }
 
     const clear = () => {
-        const c = document.querySelector('#c');
         c.addEventListener('click', () => {
             text.textContent = '';
-            displayValue = '';
+            num1 = ''; //TODO remove this if you need to keep updating num1 with the result 
+            num2 = '';
+            operator = '';
+            result = '';
         });
     }
 
     const preventRepeatedInputs = () => {
-        if (text.textContent.includes('.')) return false;
-        return true;
+        if (num1 == '.' || num1.includes('.')) return;
     } 
 
     const listenForOperator = () => {
-        const calc = docume.querySelectorAll('.calc');
-        // if (displayValue == '') return ''; 
-        return;
+        calc.forEach(button => {
+            button.addEventListener('click', (e) => {
+                if (e.target.id.includes('multiply') && num1 != '') {
+                    operator = '*';
+                    text.textContent += button.textContent;
+                } else if (num1 != '') {
+                    operator = e.target.textContent;
+                    text.textContent += button.textContent;
+                }
+            });
+        });
     }
     
-    const populateDisplay = () => {
-        const display = document.querySelectorAll('.display'); 
-
+    const populateDisplay = () => { 
         display.forEach(button => {
             button.addEventListener('click', (e) => {
                 text.textContent += button.textContent;
+                if (num1 == '') {
+                    num1 += button.textContent;
+                } else {
+                    num2 += button.textContent;
+                }
             });
         });
     }
 
     const changeSign = () => {
-        const negative = document.querySelector('#negative');
         negative.addEventListener('click', () => {
-            //TODO: currently uses the ENTIRE text content to change to negative, change it to only update the current number 
             if (Math.sign(text.textContent)) {
                 text.textContent = -text.textContent;
+                if (num1 == '') {
+                    num2 = -num2;
+                    return;
+                }
+                num1 = -num1;
+                return;
             }
+        });
+    }
+
+    const evaluate = () => {
+        equals.addEventListener('click', () => {
+            if (num2 == '' || num1 == '' || operator == '') return;
+            num1 = operate(num1,operator,num2);
+            text.textContent = num1;
         });
     }
 
     populateDisplay();
     clear();
     changeSign();
+    listenForOperator();
+    evaluate();
 }
 
 calculator();
