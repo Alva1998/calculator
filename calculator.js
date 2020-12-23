@@ -10,6 +10,7 @@ const calculator = () => {
     let num2 = '';
     let operator = '';
     let result = '';
+    let operatorPressed = false;
 
     const add = (a,b) => {
         return a + b;
@@ -26,7 +27,8 @@ const calculator = () => {
     const divide = (a,b) => {
         if (b == 0) {
             alert('CANT DIVIDE BY 0 DELETING THE UNIVERSE IN T MINUS 10 MINUTES');
-            return;
+            // return;
+            reload(true);
         }
         return a / b;
     }
@@ -69,16 +71,19 @@ const calculator = () => {
             num2 = '';
             operator = '';
             result = '';
+            operatorPressed = false;
         });
     }
 
     const preventRepeatedInputs = () => {
-        if (num1 == '.' || num1.includes('.')) return;
+        if (num1.includes('.')) return true;
+        if (num2.includes('.')) return true;
     } 
 
     const listenForOperator = () => {
         calc.forEach(button => {
             button.addEventListener('click', (e) => {
+                if (num1 != '') operatorPressed = true;
                 if (e.target.id.includes('multiply') && num1 != '') {
                     operator = '*';
                     text.textContent += button.textContent;
@@ -93,11 +98,14 @@ const calculator = () => {
     const populateDisplay = () => { 
         display.forEach(button => {
             button.addEventListener('click', (e) => {
+                // if (preventRepeatedInputs()) return;
                 text.textContent += button.textContent;
-                if (num1 == '') {
+                if (operatorPressed === false) {
                     num1 += button.textContent;
-                } else {
+                    console.log(num1)
+                } else if (operatorPressed) {
                     num2 += button.textContent;
+                    console.log(num2)
                 }
             });
         });
@@ -122,6 +130,9 @@ const calculator = () => {
             if (num2 == '' || num1 == '' || operator == '') return;
             num1 = operate(num1,operator,num2);
             text.textContent = num1;
+            num2 = ''
+            operator = ''
+            operatorPressed = false 
         });
     }
 
@@ -133,3 +144,6 @@ const calculator = () => {
 }
 
 calculator();
+
+//* USABLE CODE THAT IS TAKEN OUT FOR TESTING PURPOSES 
+// num1 == ''
