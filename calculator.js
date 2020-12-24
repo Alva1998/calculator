@@ -9,7 +9,6 @@ const calculator = () => {
     let num1 = '';
     let num2 = '';
     let operator = '';
-    let result = '';
     let operatorPressed = false;
 
     const add = (a,b) => {
@@ -67,7 +66,7 @@ const calculator = () => {
     const clear = () => {
         c.addEventListener('click', () => {
             text.textContent = '';
-            num1 = ''; //TODO remove this if you need to keep updating num1 with the result 
+            num1 = ''; 
             num2 = '';
             operator = '';
             result = '';
@@ -75,15 +74,31 @@ const calculator = () => {
         });
     }
 
-    const preventRepeatedInputs = () => {
-        if (num1.includes('.')) return true;
-        if (num2.includes('.')) return true;
-    } 
+    // const preventRepeatedInputs = () => {
+    //     if (num1.includes('.')) return true;
+    //     if (num2.includes('.')) return true;
+    // } 
 
     const listenForOperator = () => {
         calc.forEach(button => {
             button.addEventListener('click', (e) => {
+                if (operatorPressed === true) {
+                    if (num1 != '' && num2 != '') {
+                        num1 = operate(num1,operator,num2);
+                        text.textContent = num1;
+                        num2 = ''
+                        operator = ''
+                        operatorPressed = false 
+                    }
+                }
                 if (num1 != '') operatorPressed = true;
+                if (num1 != '' && num2 != '' && operatorPressed === true) {
+                    num1 = operate(num1,operator,num2);
+                    text.textContent = num1;
+                    num2 = ''
+                    operator = ''
+                    operatorPressed = false
+                }
                 if (e.target.id.includes('multiply') && num1 != '') {
                     operator = '*';
                     text.textContent += button.textContent;
@@ -102,28 +117,26 @@ const calculator = () => {
                 text.textContent += button.textContent;
                 if (operatorPressed === false) {
                     num1 += button.textContent;
-                    console.log(num1)
                 } else if (operatorPressed) {
                     num2 += button.textContent;
-                    console.log(num2)
                 }
             });
         });
     }
 
-    const changeSign = () => {
-        negative.addEventListener('click', () => {
-            if (Math.sign(text.textContent)) {
-                text.textContent = -text.textContent;
-                if (num1 == '') {
-                    num2 = -num2;
-                    return;
-                }
-                num1 = -num1;
-                return;
-            }
-        });
-    }
+    // const changeSign = () => {
+    //     negative.addEventListener('click', () => {
+    //         if (Math.sign(text.textContent)) {
+    //             text.textContent = -text.textContent;
+    //             if (num1 == '') {
+    //                 num2 = -num2;
+    //                 return;
+    //             }
+    //             num1 = -num1;
+    //             return;
+    //         }
+    //     });
+    // }
 
     const evaluate = () => {
         equals.addEventListener('click', () => {
@@ -138,7 +151,7 @@ const calculator = () => {
 
     populateDisplay();
     clear();
-    changeSign();
+    //changeSign();
     listenForOperator();
     evaluate();
 }
