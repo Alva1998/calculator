@@ -12,28 +12,28 @@ const calculator = () => {
     let operatorPressed = false;
 
     const add = (a,b) => {
-        return a + b;
+        return (a + b).toString();
     }
 
     const subtract = (a,b) => {
-        return a - b;
+        return (a - b).toString();
     }
 
     const multiply = (a,b) => {
-        return a * b;
+        return (a * b).toString();
     }
 
     const divide = (a,b) => {
         if (b == 0) {
             alert('CANT DIVIDE BY 0 DELETING THE UNIVERSE IN T MINUS 10 MINUTES');
-            // return;
-            reload(true);
+            clear();
+            return;
         }
-        return a / b;
+        return (a / b).toString();
     }
 
     const modulus = (a,b) => {
-        return a % b;
+        return (a % b).toString();
     }
 
     const operate = (a,op,b) => {
@@ -57,6 +57,7 @@ const calculator = () => {
             case '%':
                 operator = '';
                 return modulus(parseFloat(a), parseFloat(b));
+                break;
             default:
                 return alert('SECOND PARAMETER MUST BE + - * /');
                 break;
@@ -69,36 +70,19 @@ const calculator = () => {
             num1 = ''; 
             num2 = '';
             operator = '';
-            result = '';
             operatorPressed = false;
         });
     }
-
-    // const preventRepeatedInputs = () => {
-    //     if (num1.includes('.')) return true;
-    //     if (num2.includes('.')) return true;
-    // } 
 
     const listenForOperator = () => {
         calc.forEach(button => {
             button.addEventListener('click', (e) => {
                 if (operatorPressed === true) {
                     if (num1 != '' && num2 != '') {
-                        num1 = operate(num1,operator,num2);
-                        text.textContent = num1;
-                        num2 = ''
-                        operator = ''
-                        operatorPressed = false 
+                        chainedOperations();
                     }
                 }
                 if (num1 != '') operatorPressed = true;
-                if (num1 != '' && num2 != '' && operatorPressed === true) {
-                    num1 = operate(num1,operator,num2);
-                    text.textContent = num1;
-                    num2 = ''
-                    operator = ''
-                    operatorPressed = false
-                }
                 if (e.target.id.includes('multiply') && num1 != '') {
                     operator = '*';
                     text.textContent += button.textContent;
@@ -113,7 +97,6 @@ const calculator = () => {
     const populateDisplay = () => { 
         display.forEach(button => {
             button.addEventListener('click', (e) => {
-                // if (preventRepeatedInputs()) return;
                 text.textContent += button.textContent;
                 if (operatorPressed === false) {
                     num1 += button.textContent;
@@ -124,39 +107,28 @@ const calculator = () => {
         });
     }
 
-    // const changeSign = () => {
-    //     negative.addEventListener('click', () => {
-    //         if (Math.sign(text.textContent)) {
-    //             text.textContent = -text.textContent;
-    //             if (num1 == '') {
-    //                 num2 = -num2;
-    //                 return;
-    //             }
-    //             num1 = -num1;
-    //             return;
-    //         }
-    //     });
-    // }
+    const chainedOperations = () => {
+        num1 = operate(num1,operator,num2);
+        text.textContent = num1;
+        num2 = '';
+        operator = '';
+        operatorPressed = false;
+    }
 
     const evaluate = () => {
         equals.addEventListener('click', () => {
             if (num2 == '' || num1 == '' || operator == '') return;
-            num1 = operate(num1,operator,num2);
-            text.textContent = num1;
-            num2 = ''
-            operator = ''
-            operatorPressed = false 
+            chainedOperations();
         });
     }
 
     populateDisplay();
     clear();
-    //changeSign();
     listenForOperator();
     evaluate();
 }
 
 calculator();
 
-//* USABLE CODE THAT IS TAKEN OUT FOR TESTING PURPOSES 
-// num1 == ''
+//TODO: implement negative number support 
+//TODO: prevent repeated inputs on ./*+-
