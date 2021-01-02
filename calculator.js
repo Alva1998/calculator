@@ -74,6 +74,10 @@ const calculator = () => {
         });
     }
 
+    function preventRepeatedInputs() {
+
+    }
+
     const listenForOperator = () => {
         calc.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -82,7 +86,9 @@ const calculator = () => {
                         chainedOperations();
                     }
                 }
+
                 if (num1 != '') operatorPressed = true;
+
                 if (e.target.id.includes('multiply') && num1 != '') {
                     operator = '*';
                     text.textContent += button.textContent;
@@ -90,6 +96,7 @@ const calculator = () => {
                     operator = e.target.textContent;
                     text.textContent += button.textContent;
                 }
+
             });
         });
     }
@@ -132,3 +139,12 @@ calculator();
 
 //TODO: implement negative number support 
 //TODO: prevent repeated inputs on ./*+-
+
+// if (operator != e.target.textContent) {
+//     operator = e.target.textContent;
+//     console.log(operator);
+//     text.textContent = text.textContent.slice(0,-1);
+//     console.log(text.textContent)
+//     text.textContent += operator;
+//     return;
+// }
