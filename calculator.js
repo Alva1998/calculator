@@ -75,6 +75,21 @@ const calculator = () => {
     }
 
     function preventRepeatedInputs() {
+        //prevent repeated for num 1
+        if (num2 == '') {
+            if (num1.includes('.')) {
+                return false;
+            } 
+            return true;
+        }
+        //prevent repeated inputs for num2 
+        if (num2.includes('.')) {
+            return false;
+        }
+        return true;
+    }
+
+    function preventRepeatedOperators() {
 
     }
 
@@ -104,10 +119,24 @@ const calculator = () => {
     const populateDisplay = () => { 
         display.forEach(button => {
             button.addEventListener('click', (e) => {
-                text.textContent += button.textContent;
+                // if (e.target.textContent === '.') {
+                //     if (preventRepeatedInputs()) {
+                //         text.textContent += button.textContent;
+                //     }
+                // } else {
+                //     text.textContent += button.textContent;
+                // }
                 if (operatorPressed === false) {
+                    if (num1.includes('.') && e.target.textContent == '.') {
+                        return;
+                    }
+                    text.textContent += button.textContent;
                     num1 += button.textContent;
                 } else if (operatorPressed) {
+                    if (num2.includes('.') && e.target.textContent == '.') {
+                        return;
+                    }
+                    text.textContent += button.textContent;
                     num2 += button.textContent;
                 }
             });
@@ -138,13 +167,9 @@ const calculator = () => {
 calculator();
 
 //TODO: implement negative number support 
-//TODO: prevent repeated inputs on ./*+-
+//TODO: prevent repeated inputs on decimals
+//TODO: prevent repeated inputs on operators 
+//TODO: overwrite the operator if a different one is pressed 
+//TODO: center buttons 
+//TODO: make sure the result display screen does not make the numbers overflow 
 
-// if (operator != e.target.textContent) {
-//     operator = e.target.textContent;
-//     console.log(operator);
-//     text.textContent = text.textContent.slice(0,-1);
-//     console.log(text.textContent)
-//     text.textContent += operator;
-//     return;
-// }
