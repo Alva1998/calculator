@@ -91,10 +91,12 @@ const calculator = () => {
 
                 if (e.target.id.includes('multiply') && num1 != '') {
                     operator = '*';
-                    text.textContent += button.textContent;
+                    // text.textContent += button.textContent;
+                    text.textContent = `${num1} ${operator}`;
                 } else if (num1 != '') {
                     operator = e.target.textContent;
-                    text.textContent += button.textContent;
+                    // text.textContent += button.textContent;
+                    text.textContent = `${num1} ${operator}`;
                 }
 
             });
