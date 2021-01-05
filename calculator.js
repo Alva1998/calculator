@@ -74,21 +74,6 @@ const calculator = () => {
         });
     }
 
-    function preventRepeatedInputs() {
-        //prevent repeated for num 1
-        if (num2 == '') {
-            if (num1.includes('.')) {
-                return false;
-            } 
-            return true;
-        }
-        //prevent repeated inputs for num2 
-        if (num2.includes('.')) {
-            return false;
-        }
-        return true;
-    }
-
     function preventRepeatedOperators() {
 
     }
@@ -119,13 +104,6 @@ const calculator = () => {
     const populateDisplay = () => { 
         display.forEach(button => {
             button.addEventListener('click', (e) => {
-                // if (e.target.textContent === '.') {
-                //     if (preventRepeatedInputs()) {
-                //         text.textContent += button.textContent;
-                //     }
-                // } else {
-                //     text.textContent += button.textContent;
-                // }
                 if (operatorPressed === false) {
                     if (num1.includes('.') && e.target.textContent == '.') {
                         return;
@@ -151,6 +129,18 @@ const calculator = () => {
         operatorPressed = false;
     }
 
+    const negativeNumber = () => {
+        negative.addEventListener('click', () => {
+            if (num2 == '') {
+                num1 = -num1;
+                text.textContent = -text.textContent;
+                return;
+            }
+            num2 = -num2;
+            text.textContent = `${num1} ${operator} ${num2}`
+        });
+    }
+
     const evaluate = () => {
         equals.addEventListener('click', () => {
             if (num2 == '' || num1 == '' || operator == '') return;
@@ -161,13 +151,12 @@ const calculator = () => {
     populateDisplay();
     clear();
     listenForOperator();
+    negativeNumber();
     evaluate();
 }
 
 calculator();
 
-//TODO: implement negative number support 
-//TODO: prevent repeated inputs on decimals
 //TODO: prevent repeated inputs on operators 
 //TODO: overwrite the operator if a different one is pressed 
 //TODO: center buttons 
